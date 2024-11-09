@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.myUtil.autoThreads.motorThread;
 @Config
 @Autonomous(name="Clip")
 public class Clip extends LinearOpMode {
-    public static int camEnd = -1060;
+    public static int camEnd = -1125;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -29,7 +29,7 @@ public class Clip extends LinearOpMode {
         while (m.isAlive());
 
         //Extend arm and lower cam
-        m.begin(r.arm, 530, 10,0.5);
+        m.begin(r.arm, 450, 10,0.5);
         while (m.isAlive());
         r.waiter(500);
         m.begin(r.cam, camEnd,20,0.5);
