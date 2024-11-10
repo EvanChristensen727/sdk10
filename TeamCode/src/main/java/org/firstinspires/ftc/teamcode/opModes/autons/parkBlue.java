@@ -16,6 +16,8 @@ public class parkBlue extends LinearOpMode {
         motorThread m = new motorThread(this,r);
         waitForStart();
         r.fixedMove(0.5,80000, Hardware.directions.RIGHT);
+        r.fixedMove(0.5,80000, Hardware.directions.RIGHT);
+        r.fixedMove(0.5,80000, Hardware.directions.RIGHT);
 //        r.simpleMove(0.3, 8000, Hardware.directions.RIGHT);
         r.waiter(1000);
 //        r.superRotate(0.3,180, Hardware.directions.RIGHT);

@@ -25,7 +25,7 @@ public class Clip extends LinearOpMode {
         //Raise Cam and move Forward
         m.begin(r.cam,-1259, 50,0.5);
         r.waiter(1000);
-        r.simpleMove(0.5,16, Hardware.directions.FORWARD);
+        r.fixedMove(0.5,16, Hardware.directions.FORWARD);
         while (m.isAlive());
 
         //Extend arm and lower cam
@@ -50,8 +50,8 @@ public class Clip extends LinearOpMode {
         m.begin(r.cam,-10,50,0.5);
 
         //Move to the park zone
-        r.simpleMove(0.5,47, Hardware.directions.RIGHT);
-        r.simpleMove(0.5,12.5, Hardware.directions.BACKWARD);
+        r.fixedMove(0.5,47, Hardware.directions.RIGHT);
+        r.fixedMove(0.5,12.5, Hardware.directions.BACKWARD);
         while(m.isAlive());
     }
 }
