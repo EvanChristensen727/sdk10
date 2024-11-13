@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.myUtil.autoThreads.motorThread;
 @Autonomous(name="Clip")
 public class Clip extends LinearOpMode {
     public static int camEnd = -1125;
+    //YOu should krill yourself
 
     @Override
     public void runOpMode() throws InterruptedException {
