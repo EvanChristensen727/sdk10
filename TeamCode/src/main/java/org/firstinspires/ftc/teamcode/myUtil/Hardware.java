@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Hardware {
     OpMode opMode;
@@ -21,7 +20,7 @@ public class Hardware {
             "Evan has just mauled someone for making eye contact"
     };
 
-    public Servo claw;
+    public Servo claw, slay, lever;
     public IMU imu;
 
 
@@ -66,16 +65,22 @@ public class Hardware {
         }
 
         try{
-            arm = opMode.hardwareMap.dcMotor.get("arm");
-            cam = opMode.hardwareMap.dcMotor.get("cam");
             claw = opMode.hardwareMap.servo.get("claw");
-            //want me to reset it first
-            //i havent uploaded
-            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            cam.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            arm.setDirection(DcMotorSimple.Direction.REVERSE);
+            slay = opMode.hardwareMap.servo.get("slay");
+            lever = opMode.hardwareMap.servo.get("lever");
+
         }catch(Exception e){
-            opMode.telemetry.addLine("Arm uninitialized");
+            opMode.telemetry.addLine("Servos uninitialized");
+        }
+        try{
+            arm = opMode.hardwareMap.dcMotor.get("lift");
+        }catch (Exception e){
+            opMode.telemetry.addLine("Lift Uninitialized");
+        }
+        try{
+            claw = opMode.hardwareMap.servo.get("claw");
+        }catch (Exception e){
+            opMode.telemetry.addLine("Arm Uninitialized");
         }
 
         opMode.telemetry.update();

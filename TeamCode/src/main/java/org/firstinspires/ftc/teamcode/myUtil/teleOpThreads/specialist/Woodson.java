@@ -68,18 +68,12 @@ public class Woodson extends Specialist {
                     unpressGrip = false;
                 }
             } else {
-                r.claw.setPosition(1 - opMode.gamepad2.right_trigger);
+                r.claw.setPosition(opMode.gamepad2.right_trigger);
             }
 
             //Controls the cam
 
-            if (r.cam.getCurrentPosition()<0 && opMode.gamepad2.dpad_down){
-                r.cam.setPower(deflator);
-            }else if (r.cam.getCurrentPosition() > LETSFREAKINGGOIMGOINGTOMAKETHISVARIABLENAMESOINCREDIBLYLONG && opMode.gamepad2.dpad_up){
-                r.cam.setPower(-deflator);
-            }else{
-                r.cam.setPower(0);
-            }
+
 
             //r.cam.setPower(opMode.gamepad2.dpad_down ? -deflator : opMode.gamepad2.dpad_up ? deflator :0);
 

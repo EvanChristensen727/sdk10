@@ -11,9 +11,9 @@ public class resetArmAndCam extends LinearOpMode {
         MecanumHardAuto r = new MecanumHardAuto();
         r.initRobot(this);
         r.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        r.cam.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        r.cam.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         r.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        r.cam.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        r.cam.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        r.claw.setPosition(0);
 //        r.waiter(1000);
     }
