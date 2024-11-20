@@ -71,8 +71,24 @@ public class Woodson extends Specialist {
                 r.claw.setPosition(opMode.gamepad2.right_trigger);
             }
 
-            //Controls the cam
+            //Controls the slay
+            pos -= opMode.gamepad2.dpad_up ? deltaTime.seconds() : opMode.gamepad2.dpad_down ? -deltaTime.seconds() : 0;
+            if (pos > 1){
+                pos =1;
+            }
+            if (pos < 0){
+                pos = 0;
+            }
+            r.slay.setPosition(pos);
 
+            pos2 += deltaTime.seconds()*-opMode.gamepad2.left_stick_y*deflator*0.5;
+            if (pos2 > 1){
+                pos2 =1;
+            }
+            if (pos2 < 0){
+                pos2 = 0;
+            }
+            r.lever.setPosition(pos2);
 
 
             //r.cam.setPower(opMode.gamepad2.dpad_down ? -deflator : opMode.gamepad2.dpad_up ? deflator :0);
@@ -80,6 +96,8 @@ public class Woodson extends Specialist {
 
         }
     }
+    double pos = 0;
+    double pos2=0;
     ElapsedTime deltaTime = new ElapsedTime();
     OpMode opMode;
     Hardware r;
@@ -92,7 +110,8 @@ public class Woodson extends Specialist {
     boolean unpressR1=false;
     boolean unpressGrip=false;
     boolean manual=true;
-    int pos = 0;
+    boolean unpressSlay =false;
+    int speed=1;
     boolean started;
     public Woodson(OpMode opMode, Hardware r,boolean started){
         this.opMode = opMode;
