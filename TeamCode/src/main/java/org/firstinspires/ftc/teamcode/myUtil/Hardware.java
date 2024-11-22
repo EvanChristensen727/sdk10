@@ -73,7 +73,8 @@ public class Hardware {
             opMode.telemetry.addLine("Servos uninitialized");
         }
         try{
-            arm = opMode.hardwareMap.dcMotor.get("lift");
+            arm = opMode.hardwareMap.dcMotor.get("arm");
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }catch (Exception e){
             opMode.telemetry.addLine("Lift Uninitialized");
         }

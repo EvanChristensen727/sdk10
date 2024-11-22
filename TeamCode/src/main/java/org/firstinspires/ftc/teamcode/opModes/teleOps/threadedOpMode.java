@@ -43,7 +43,8 @@ public class threadedOpMode extends OpMode {
         telemetry.addLine(splash);
         telemetry.addData("Twist", Math.toDegrees(pilot.twist));
         telemetry.addData("Angle", pilot.angles.getYaw(AngleUnit.DEGREES));
-        telemetry.addData("Cam Position (0-"+ -Woodson.LETSFREAKINGGOIMGOINGTOMAKETHISVARIABLENAMESOINCREDIBLYLONG+")",r.cam.getCurrentPosition());
+        telemetry.addData("Arm Pos",r.arm.getCurrentPosition());
+//        telemetry.addData("Cam Position (0-"+ -Woodson.LETSFREAKINGGOIMGOINGTOMAKETHISVARIABLENAMESOINCREDIBLYLONG+")",r.cam.getCurrentPosition());
         telemetry.addLine("To strafe robot, use left joystick");
         telemetry.addLine("To rotate robot, use right joystick");
         telemetry.addLine("Adjust Left/Right Twist: Left/Right");

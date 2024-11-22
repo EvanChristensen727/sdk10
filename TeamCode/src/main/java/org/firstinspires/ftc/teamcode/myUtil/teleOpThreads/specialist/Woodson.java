@@ -25,7 +25,7 @@ public class Woodson extends Specialist {
 
             //Arm Positions
             if (manual) {
-                r.arm.setPower(-opMode.gamepad2.right_stick_y * deflator);
+                r.arm.setPower(opMode.gamepad2.right_stick_y * deflator);
             } else if (opMode.gamepad2.a && !arm.height.equals("low")) {
                 opMode.gamepad2.rumble(10);
                 arm.moveTo("low");
@@ -68,20 +68,21 @@ public class Woodson extends Specialist {
                     unpressGrip = false;
                 }
             } else {
-                r.claw.setPosition(opMode.gamepad2.right_trigger);
+                r.claw.setPosition(1-opMode.gamepad2.right_trigger);
             }
 
             //Controls the slay
-            pos -= opMode.gamepad2.dpad_up ? deltaTime.seconds() : opMode.gamepad2.dpad_down ? -deltaTime.seconds() : 0;
-            if (pos > 1){
-                pos =1;
+//            opMode.telemetry.addData("Delta Time", deltaTime.seconds());
+            posx -= opMode.gamepad2.dpad_up ? deltaTime.seconds()*20 : opMode.gamepad2.dpad_down ? -deltaTime.seconds()*20 : 0;
+            if (posx > 1){
+                posx =1;
             }
-            if (pos < 0){
-                pos = 0;
+            if (posx < 0){
+                posx = 0;
             }
-            r.slay.setPosition(pos);
+            r.slay.setPosition(posx);
 
-            pos2 += deltaTime.seconds()*-opMode.gamepad2.left_stick_y*deflator*0.5;
+            pos2 += deltaTime.seconds()*-opMode.gamepad2.left_stick_y*deflator*20;
             if (pos2 > 1){
                 pos2 =1;
             }
@@ -96,8 +97,9 @@ public class Woodson extends Specialist {
 
         }
     }
-    double pos = 0;
-    double pos2=0;
+    double posx = 0;
+    double pos2=1;
+    int pos = 1;
     ElapsedTime deltaTime = new ElapsedTime();
     OpMode opMode;
     Hardware r;
