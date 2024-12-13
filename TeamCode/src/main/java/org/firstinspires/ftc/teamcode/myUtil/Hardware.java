@@ -20,7 +20,7 @@ public class Hardware {
             "Evan has just mauled someone for making eye contact"
     };
 
-    public Servo claw, slay, lever;
+    public Servo claw, slay, lever,claw2;
     public IMU imu;
 
 
@@ -56,7 +56,7 @@ public class Hardware {
         }
 
         try {
-            parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
+            parameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
 
             imu = opMode.hardwareMap.get(IMU.class, "imu");
             imu.initialize(parameters);
@@ -66,6 +66,7 @@ public class Hardware {
 
         try{
             claw = opMode.hardwareMap.servo.get("claw");
+            claw2 = opMode.hardwareMap.servo.get("claw2");
             slay = opMode.hardwareMap.servo.get("slay");
             lever = opMode.hardwareMap.servo.get("lever");
 
@@ -75,8 +76,10 @@ public class Hardware {
         try{
             arm = opMode.hardwareMap.dcMotor.get("arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            arm.setDirection(DcMotorSimple.Direction.REVERSE);
         }catch (Exception e){
-            opMode.telemetry.addLine("Lift Uninitialized");
+            opMode.telemetry.
+                    addLine("Lift Uninitialized");
         }
         try{
             claw = opMode.hardwareMap.servo.get("claw");

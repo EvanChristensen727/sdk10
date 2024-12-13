@@ -8,12 +8,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.myUtil.Hardware;
 import org.firstinspires.ftc.teamcode.myUtil.keyRing;
 import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch.Arm;
+import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch.Claw;
+import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch.holdArm;
 
 @Config
 public class Woodson extends Specialist {
     @Override
     public void run(){
+        Claw claw = new Claw(opMode,r);
+
+
         while (!keyRing.start);
+
         while (true) {
 
 
@@ -24,30 +30,61 @@ public class Woodson extends Specialist {
             deflator = opMode.gamepad2.left_trigger > 0.5 ? 1 : opMode.gamepad2.left_bumper ? 0.3 : 0.7;
 
             //Arm Positions
-            if (manual) {
-                r.arm.setPower(opMode.gamepad2.right_stick_y * deflator);
-            } else if (opMode.gamepad2.a && !arm.height.equals("low")) {
-                opMode.gamepad2.rumble(10);
-                arm.moveTo("low");
-            } else if (opMode.gamepad2.x && !arm.height.equals("middle")) {
-                arm.moveTo("middle");
-                opMode.gamepad2.rumble(10);
-            } else if (opMode.gamepad2.y && !arm.height.equals("high")) {
-                arm.moveTo("high");
-                opMode.gamepad2.rumble(10);
+
+//            target += ((opMode.gamepad2.right_stick_y*6*deflator));
+
+
+
+            //Does preset positions when not in manual, and sets power when manual is true
+            if (!manual){
+                target-=((opMode.gamepad2.right_stick_y*deltaTime.milliseconds())*1000);
+                if (target>850){
+                    target=850;
+                } if (target <0){
+                    target = 0;
+                }
+                //high is 374
+                if (opMode.gamepad2.y){
+                    target=374;
+                }else if (opMode.gamepad2.a){
+                    target=0;
+                }
+                r.arm.setTargetPosition((int)target);
+                r.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                r.arm.setPower(0.8);
+
+            }else{
+
+                r.arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                r.arm.setPower(-opMode.gamepad2.right_stick_y*deflator);
             }
+//            opMode.telemetry.addData("Power",r.arm.getPower());
+//            opMode.telemetry.addData("Target Power",-opMode.gamepad2.right_stick_y*deflator);
+//            opMode.telemetry.addData("Manual",manual);
+//            opMode.telemetry.update();
+
+//            r.arm.setPower(opMode.gamepad2.right_stick_y);
+
+            //switches the code from arm holding to arm floating
             if (opMode.gamepad2.b) {
                 unpressB = true;
             } else if (unpressB) {
-                opMode.gamepad2.rumble(10);
+//                opMode.gamepad2.rumble(10);
                 if (!manual) {
-                    r.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     manual = true;
-                    arm.run = false;
+                    target = 0;
+
+
+
                 } else {
                     manual = false;
+                    r.arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    arm.run = false;
+
+
                 }
                 unpressB = false;
+
             }
 
             //Claw Grip Code
@@ -64,16 +101,19 @@ public class Woodson extends Specialist {
                 } else if (unpressGrip) {
                     if (pos == 1){pos=0;}
                     else {pos=1;}
-                    r.claw.setPosition(pos);
+                    claw.setPosition(pos);
                     unpressGrip = false;
                 }
             } else {
-                r.claw.setPosition(1-opMode.gamepad2.right_trigger);
+                claw.setPosition(opMode.gamepad2.right_trigger);
             }
 
             //Controls the slay
-//            opMode.telemetry.addData("Delta Time", deltaTime.seconds());
-            posx -= opMode.gamepad2.dpad_up ? deltaTime.seconds()*20 : opMode.gamepad2.dpad_down ? -deltaTime.seconds()*20 : 0;
+//            opMode.telemetry.addData("Pos", target);
+//            opMode.telemetry.addData("Milliseconds",deltaTime.milliseconds());
+            //This is for the wrist (slay) and the lever arm, the calculation is essentially multiplying the stick by
+            //the delta time between frames, which locks in the max rate of change regardless of fps
+            posx -= opMode.gamepad2.dpad_up ? (deltaTime.milliseconds())/1000 : opMode.gamepad2.dpad_down ? -(deltaTime.milliseconds())/1000 : 0;
             if (posx > 1){
                 posx =1;
             }
@@ -82,7 +122,7 @@ public class Woodson extends Specialist {
             }
             r.slay.setPosition(posx);
 
-            pos2 += deltaTime.seconds()*-opMode.gamepad2.left_stick_y*deflator*20;
+            pos2 += ((deltaTime.milliseconds()*-opMode.gamepad2.left_stick_y*deflator)/1000);
             if (pos2 > 1){
                 pos2 =1;
             }
@@ -92,20 +132,41 @@ public class Woodson extends Specialist {
             r.lever.setPosition(pos2);
 
 
+            //This is up and down presets for the lever/wrist servos
+            if (opMode.gamepad2.dpad_right){
+                unpressUpPreset=true;
+            }else if (unpressUpPreset){
+                posx=0.4;
+                pos2=1;
+                unpressUpPreset=false;
+            }
+            if (opMode.gamepad2.dpad_left){
+                unpressDownPreset=true;
+            }else if (unpressDownPreset){
+                posx=0.4;
+                pos2=0;
+                unpressDownPreset=false;
+            }
+
+
             //r.cam.setPower(opMode.gamepad2.dpad_down ? -deflator : opMode.gamepad2.dpad_up ? deflator :0);
 
 
         }
     }
-    double posx = 0;
+    double posx = 1;
     double pos2=1;
-    int pos = 1;
+    double target;
+    double pos = 1;
+    int armTarget = 0;
     ElapsedTime deltaTime = new ElapsedTime();
     OpMode opMode;
     Hardware r;
     double deflator;
 
     Arm arm;
+    boolean unpressDownPreset = false;
+    boolean unpressUpPreset=false;
     boolean gripHold = false;
 
     boolean unpressB=false;
@@ -115,10 +176,12 @@ public class Woodson extends Specialist {
     boolean unpressSlay =false;
     int speed=1;
     boolean started;
+    holdArm holdArm;
     public Woodson(OpMode opMode, Hardware r,boolean started){
         this.opMode = opMode;
         this.r=r;
         arm = new Arm(this.opMode,this.r);
+        holdArm = new holdArm(this.r, this.opMode);
         this.started = started;
     }
 

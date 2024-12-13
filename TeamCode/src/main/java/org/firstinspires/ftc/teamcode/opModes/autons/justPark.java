@@ -1,17 +1,18 @@
 package org.firstinspires.ftc.teamcode.opModes.autons;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.myUtil.Hardware;
 import org.firstinspires.ftc.teamcode.myUtil.MecanumHardAuto;
-
+@Autonomous(name="playground")
 public class justPark extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumHardAuto r = new MecanumHardAuto();
+        r.initRobot(this);
         waitForStart();
-        r.simpleMove(0.5, 6, Hardware.directions.FORWARD);
-        r.simpleMove(0.5, 48, Hardware.directions.RIGHT);
-        r.simpleMove(0.5, 3, Hardware.directions.BACKWARD);
+        r.fixedMove(0.5, 40, Hardware.directions.RIGHT);
+
     }
 }
