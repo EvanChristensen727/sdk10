@@ -18,7 +18,7 @@ public class Woodson extends Specialist {
         Claw claw = new Claw(opMode,r);
 
 
-        while (!keyRing.start);
+        while (!keyRing.start){opMode.telemetry.addData("start",keyRing.start);}
 
         while (true) {
 
@@ -96,7 +96,7 @@ public class Woodson extends Specialist {
                 unpressR1 = false;
             }
             if (gripHold) {
-                if (opMode.gamepad2.right_trigger > 0.5) {
+                if (opMode.gamepad2.right_trigger > 0.2) {
                     unpressGrip = true;
                 } else if (unpressGrip) {
                     if (pos == 1){pos=0;}

@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.myUtil.Hardware;
-
+@Config
 public class Claw extends Hardware {
     OpMode opMode;
     Hardware r;
-    double claw1Min=0.5;
-    double claw1Max=0;
-    double claw2Max=0.5;
-    double claw2Min=0;
+    public static double claw1Min=0.6;
+    public static double claw1Max=0.2;
+    public static double claw2Max=0.7;
+    public static double claw2Min=0;
     public Claw(OpMode opMode, Hardware r){
         this.opMode = opMode;
         this.r = r;
