@@ -77,6 +77,7 @@ public class Hardware {
             arm = opMode.hardwareMap.dcMotor.get("arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             arm.setDirection(DcMotorSimple.Direction.REVERSE);
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }catch (Exception e){
             opMode.telemetry.
                     addLine("Lift Uninitialized");

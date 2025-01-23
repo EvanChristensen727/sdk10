@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.myUtil.Hardware;
-import org.firstinspires.ftc.teamcode.myUtil.keyRing;
 
 public class Standard extends Pilot{
     //    double power1,power2,power3,power4;
@@ -34,8 +33,7 @@ public class Standard extends Pilot{
 
 
     public void run() {
-        while (!keyRing.start){
-        }
+
         while (true) {
 
             angles = r.imu.getRobotYawPitchRollAngles();

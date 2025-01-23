@@ -13,7 +13,7 @@ public class MecanumHardAuto extends Hardware {
     double mech = (49.0/24.0);
     final double TPD = 13.1199818605599;
     final double mecanumMulti = 1/0.9;
-    public int pause = 100;
+    public int pause = 400;
     LinearOpMode opMode;
 
 

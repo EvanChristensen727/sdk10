@@ -10,9 +10,10 @@ import org.firstinspires.ftc.teamcode.myUtil.keyRing;
 import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.pilot.Pilot;
 import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.pilot.Standard;
 import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.specialist.Specialist;
-import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.specialist.Woodson;
-@TeleOp(name="WOODSON/BEYER OPMODE")
-public class threadedOpMode extends OpMode {
+import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.specialist.christopher;
+
+@TeleOp(name="CHRISTENSEN/MCCLAY OPMODE")
+public class chrisEvan extends OpMode {
     Specialist operator;
     Pilot pilot;
     Hardware r = new Hardware();
@@ -25,7 +26,7 @@ public class threadedOpMode extends OpMode {
         //Because all parts of the telop threads are children classes I can individually switch the
         //variables to be the classes for each of the drivers to have personalized controls
         keyRing.start=false;
-        operator = new Woodson(this, r,started);
+        operator = new christopher(this, r,started);
         pilot = new Standard(this,r,started);
         splash=r.splashes[(int)(r.splashes.length*Math.random())];
 

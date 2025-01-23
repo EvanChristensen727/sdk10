@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch.Claw;
 import org.firstinspires.ftc.teamcode.myUtil.teleOpThreads.armsAndSuch.holdArm;
 
 @Config
-public class Woodson extends Specialist {
+public class christopher extends Specialist {
     @Override
     public void run(){
         Claw claw = new Claw(opMode,r);
@@ -112,7 +112,7 @@ public class Woodson extends Specialist {
 //            opMode.telemetry.addData("Milliseconds",deltaTime.milliseconds());
             //This is for the wrist (slay) and the lever arm, the calculation is essentially multiplying the stick by
             //the delta time between frames, which locks in the max rate of change regardless of fps
-            posx -= opMode.gamepad2.dpad_up ? (deltaTime.milliseconds())/1000 : opMode.gamepad2.dpad_down ? -(deltaTime.milliseconds())/1000 : 0;
+            posx -= opMode.gamepad2.dpad_left ? (deltaTime.milliseconds())/1000 : opMode.gamepad2.dpad_right ? -(deltaTime.milliseconds())/1000 : 0;
             if (posx > 1){
                 posx =1;
             }
@@ -132,17 +132,17 @@ public class Woodson extends Specialist {
 
 
             //This is up and down presets for the lever/wrist servos
-            if (opMode.gamepad2.dpad_right){
+            if (opMode.gamepad2.dpad_up){
                 unpressUpPreset=true;
             }else if (unpressUpPreset){
-                posx=0.4;
+                posx=0.3;
                 pos2=1;
                 unpressUpPreset=false;
             }
-            if (opMode.gamepad2.dpad_left){
+            if (opMode.gamepad2.dpad_down){
                 unpressDownPreset=true;
             }else if (unpressDownPreset){
-                posx=0.4;
+                posx=0.3;
                 pos2=0;
                 unpressDownPreset=false;
             }
@@ -176,7 +176,7 @@ public class Woodson extends Specialist {
     int speed=1;
     boolean started;
     holdArm holdArm;
-    public Woodson(OpMode opMode, Hardware r,boolean started){
+    public christopher(OpMode opMode, Hardware r,boolean started){
         this.opMode = opMode;
         this.r=r;
         arm = new Arm(this.opMode,this.r);

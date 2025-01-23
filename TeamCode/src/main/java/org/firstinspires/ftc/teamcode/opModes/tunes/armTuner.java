@@ -14,16 +14,13 @@ public class armTuner extends OpMode {
         r.initRobot(this);
         r.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         r.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        r.cam.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        r.cam.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        r.cam.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        r.cam.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        r.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
     public void loop() {
-        r.arm.setPower(-gamepad1.right_stick_y*0.3);
-        r.cam.setPower(gamepad1.dpad_up ? -0.3 : gamepad1.dpad_down ? 0.3 : 0);
-        telemetry.addData("Arm Position", r.arm.getCurrentPosition());
-        telemetry.addData("Arm Position", r.cam.getCurrentPosition());
-        telemetry.update();
+        r.lever.setPosition(1);
     }
 }
